@@ -1,9 +1,9 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const credentials = require('../services/credentials.json'); // Use your google credentials on credentials.json file
+const credentials = require('../services/credentials.json');
 
 module.exports = {
   async handleGrades(request, response) {
-    const doc = new GoogleSpreadsheet('1-BAUPETyJgRPx_qyMCABUMGfOTOJ6Rb6Vg-VgfIR7vo');  // Use your sheet ID here
+    const doc = new GoogleSpreadsheet('1-BAUPETyJgRPx_qyMCABUMGfOTOJ6Rb6Vg-VgfIR7vo'); 
 
     await doc.useServiceAccountAuth(credentials);
 
@@ -16,7 +16,7 @@ module.exports = {
     const maxClasses = 60;
 
     rows.forEach((row) => {
-      if (row.missing > 15) {
+      if (row.missing > maxClasses * 0.25) {
         row.situation = 'Reprovado por falta';
         row.gradeToPass = 0;
         row.save();
